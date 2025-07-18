@@ -14,7 +14,7 @@ const environments = {
     timeout: 15000,
   },
   production: {
-    baseURL: 'https://api.holistic-wellness.com/api',
+    baseURL: 'https://holistic-maroc-backend.onrender.com/api',
     timeout: 15000,
   },
 };
