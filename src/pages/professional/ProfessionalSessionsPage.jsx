@@ -213,7 +213,7 @@ const ProfessionalSessionsPage = () => {
   const fetchProfessionalCategories = async () => {
     try {
       setLoadingCategories(true);
-      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
       const token = localStorage.getItem('token');
 
       const response = await axios.get(`${API_URL}/api/professionals/me/categories`, {
@@ -234,7 +234,7 @@ const ProfessionalSessionsPage = () => {
   // Add function to add a new category
   const addCategory = async categoryName => {
     try {
-      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
       const token = localStorage.getItem('token');
 
       const response = await axios.post(
@@ -262,7 +262,7 @@ const ProfessionalSessionsPage = () => {
   // Add function to delete a category
   const deleteCategory = async categoryName => {
     try {
-      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
       const token = localStorage.getItem('token');
 
       const response = await axios.delete(
@@ -289,7 +289,7 @@ const ProfessionalSessionsPage = () => {
     try {
       setLoadingReviews(true);
       setReviewsError(null); // Reset error state
-      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
       const token = localStorage.getItem('token');
 
       // Validation des paramètres
@@ -416,7 +416,7 @@ const ProfessionalSessionsPage = () => {
 
     try {
       setSubmittingResponse(true);
-      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
       const token = localStorage.getItem('token');
 
       await axios.put(
@@ -449,7 +449,7 @@ const ProfessionalSessionsPage = () => {
   const fetchSessions = async () => {
     try {
       setLoading(true);
-      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
       const token = localStorage.getItem('token');
 
       const response = await axios.get(`${API_URL}/api/sessions/professional`, {
@@ -469,7 +469,7 @@ const ProfessionalSessionsPage = () => {
   const fetchSessionBookings = async sessionId => {
     try {
       setIsLoadingRequests(true);
-      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
       const token = localStorage.getItem('token');
 
       const response = await axios.get(`${API_URL}/api/sessions/${sessionId}/bookings`, {
@@ -506,7 +506,7 @@ const ProfessionalSessionsPage = () => {
 
   const fetchSpecificBooking = async bookingId => {
     try {
-      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
       const token = localStorage.getItem('token');
 
       const response = await axios.get(`${API_URL}/api/bookings/${bookingId}`, {
@@ -605,7 +605,7 @@ const ProfessionalSessionsPage = () => {
         return;
       }
 
-      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
       const token = localStorage.getItem('token');
 
       if (!token) {
@@ -787,7 +787,7 @@ const ProfessionalSessionsPage = () => {
 
   const handleDeleteConfirm = async () => {
     try {
-      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
       const token = localStorage.getItem('token');
 
       await axios.put(
@@ -898,7 +898,7 @@ const ProfessionalSessionsPage = () => {
 
   const handleBookingStatusChange = async (bookingId, status, reason = '') => {
     try {
-      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
       const token = localStorage.getItem('token');
 
       await axios.put(
@@ -927,7 +927,7 @@ const ProfessionalSessionsPage = () => {
 
   const handleCompleteSession = async sessionId => {
     try {
-      const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
       const token = localStorage.getItem('token');
 
       const response = await axios.put(

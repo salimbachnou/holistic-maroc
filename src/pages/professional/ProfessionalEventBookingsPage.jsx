@@ -53,7 +53,7 @@ const ProfessionalEventBookingsPage = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:5000/api/events/professional', {
+      const response = await axios.get('https://holistic-maroc-backend.onrender.com/api/events/professional', {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -73,7 +73,7 @@ const ProfessionalEventBookingsPage = () => {
     try {
       setLoadingParticipants(true);
       const token = localStorage.getItem('token');
-      const response = await axios.get(`http://localhost:5000/api/events/${eventId}/participants`, {
+      const response = await axios.get(`https://holistic-maroc-backend.onrender.com/api/events/${eventId}/participants`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -115,7 +115,7 @@ const ProfessionalEventBookingsPage = () => {
       const token = localStorage.getItem('token');
 
       await axios.put(
-        `http://localhost:5000/api/events/${eventId}/participants/${participantId}`,
+        `https://holistic-maroc-backend.onrender.com/api/events/${eventId}/participants/${participantId}`,
         { status: newStatus, reason },
         { headers: { Authorization: `Bearer ${token}` } }
       );

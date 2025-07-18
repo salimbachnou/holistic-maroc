@@ -240,7 +240,7 @@ const ProfessionalsPage = () => {
                           if (imagePath.startsWith('http') || imagePath.startsWith('data:')) {
                             return imagePath;
                           }
-                          const apiUrl = process.env.REACT_APP_API_URL || 'http://localhost:5000';
+                          const apiUrl = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
                           return `${apiUrl}${imagePath}`;
                         };
 

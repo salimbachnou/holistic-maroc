@@ -134,7 +134,7 @@ const EventDetailPage = () => {
     const fetchEventDetails = async () => {
       try {
         setLoading(true);
-        const response = await _axios.get(`http://localhost:5000/api/events/${id}`);
+        const response = await _axios.get(`https://holistic-maroc-backend.onrender.com/api/events/${id}`);
 
         if (response.data && response.data.event) {
           const eventData = response.data.event;
@@ -298,7 +298,7 @@ const EventDetailPage = () => {
     setProcessingBooking(true);
 
     try {
-      const response = await _axios.post(`http://localhost:5000/api/events/${id}/register`, {
+      const response = await _axios.post(`https://holistic-maroc-backend.onrender.com/api/events/${id}/register`, {
         quantity: bookingQuantity,
         note: bookingNote,
       });
@@ -312,7 +312,7 @@ const EventDetailPage = () => {
       closeBookingModal();
 
       // Refresh event details to update participant count
-      const updatedResponse = await _axios.get(`http://localhost:5000/api/events/${id}`);
+      const updatedResponse = await _axios.get(`https://holistic-maroc-backend.onrender.com/api/events/${id}`);
       if (updatedResponse.data && updatedResponse.data.event) {
         setEvent(updatedResponse.data.event);
 
@@ -346,7 +346,7 @@ const EventDetailPage = () => {
     setCancellingRegistration(true);
 
     try {
-      const response = await _axios.post(`http://localhost:5000/api/events/${id}/cancel`);
+      const response = await _axios.post(`https://holistic-maroc-backend.onrender.com/api/events/${id}/cancel`);
 
       if (response.data && response.data.message) {
         toast.success(response.data.message);
@@ -355,7 +355,7 @@ const EventDetailPage = () => {
       }
 
       // Refresh event details to update participant count
-      const updatedResponse = await _axios.get(`http://localhost:5000/api/events/${id}`);
+      const updatedResponse = await _axios.get(`https://holistic-maroc-backend.onrender.com/api/events/${id}`);
       if (updatedResponse.data && updatedResponse.data.event) {
         setEvent(updatedResponse.data.event);
 
@@ -388,7 +388,7 @@ const EventDetailPage = () => {
       if (userReview) {
         // Update existing review
         response = await _axios.put(
-          `http://localhost:5000/api/events/${id}/reviews/${userReview._id}`,
+          `https://holistic-maroc-backend.onrender.com/api/events/${id}/reviews/${userReview._id}`,
           {
             rating: reviewRating,
             comment: reviewComment,
@@ -396,7 +396,7 @@ const EventDetailPage = () => {
         );
       } else {
         // Create new review
-        response = await _axios.post(`http://localhost:5000/api/events/${id}/reviews`, {
+        response = await _axios.post(`https://holistic-maroc-backend.onrender.com/api/events/${id}/reviews`, {
           rating: reviewRating,
           comment: reviewComment,
         });
@@ -407,7 +407,7 @@ const EventDetailPage = () => {
         setIsReviewModalOpen(false);
 
         // Refresh event details
-        const updatedResponse = await _axios.get(`http://localhost:5000/api/events/${id}`);
+        const updatedResponse = await _axios.get(`https://holistic-maroc-backend.onrender.com/api/events/${id}`);
         if (updatedResponse.data && updatedResponse.data.event) {
           setEvent(updatedResponse.data.event);
 
@@ -712,7 +712,7 @@ const EventDetailPage = () => {
 
   // Si aucune image n'est disponible, utiliser l'image par défaut
   if (eventImages.length === 0) {
-    eventImages.push({ url: 'http://localhost:5000/uploads/events/default.jpg' });
+    eventImages.push({ url: 'https://holistic-maroc-backend.onrender.com/uploads/events/default.jpg' });
   }
 
   // Sécuriser l'accès à l'image active
@@ -746,7 +746,7 @@ const EventDetailPage = () => {
                 className="w-full h-96 object-cover transform hover:scale-105 transition-transform duration-700"
                 onError={e => {
                   e.target.onerror = null;
-                  e.target.src = 'http://localhost:5000/uploads/events/default.jpg';
+                  e.target.src = 'https://holistic-maroc-backend.onrender.com/uploads/events/default.jpg';
                 }}
               />
               {/* Gradient overlay */}
