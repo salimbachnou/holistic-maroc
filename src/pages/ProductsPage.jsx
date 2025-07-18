@@ -962,7 +962,8 @@ const ProductsPage = () => {
   const fetchProducts = async () => {
     try {
       setLoading(true);
-      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
+      const API_URL =
+        process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
 
       try {
         // Try to fetch from API
