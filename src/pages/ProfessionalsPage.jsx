@@ -55,6 +55,7 @@ const ProfessionalsPage = () => {
           setProfessionals(response.professionals || []);
           setError(null);
         } catch (apiError) {
+          console.error('API Error:', apiError);
           // If API fails, use mock data with filtering
           const filteredMockData = filterProfessionals(mockProfessionals, {
             search: filters.search,
@@ -73,9 +74,12 @@ const ProfessionalsPage = () => {
             );
           }
 
-          setError('Le serveur est indisponible. Les données affichées sont des exemples.');
+          setError(
+            'Le serveur est temporairement indisponible. Les données affichées sont des exemples.'
+          );
         }
       } catch (err) {
+        console.error('General Error:', err);
         setError('Une erreur est survenue. Veuillez réessayer plus tard.');
         setProfessionals([]);
       } finally {
@@ -198,8 +202,18 @@ const ProfessionalsPage = () => {
 
         {/* Error Message */}
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
-            {error}
+          <div className="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-6">
+            <p className="font-medium">⚠️ Information:</p>
+            <p>{error}</p>
+            {process.env.NODE_ENV === 'development' && (
+              <div className="mt-2 text-sm">
+                <p>
+                  Backend URL:{' '}
+                  {process.env.REACT_APP_API_URL ||
+                    'https://holistic-maroc-backend.onrender.com/api'}
+                </p>
+              </div>
+            )}
           </div>
         )}
 

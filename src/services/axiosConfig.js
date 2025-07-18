@@ -2,15 +2,12 @@ import axios from 'axios';
 
 // Create a custom axios instance with default configuration
 const api = axios.create({
-  baseURL:
-    process.env.NODE_ENV === 'production'
-      ? '/api' // In production, use relative path
-      : 'https://holistic-maroc-backend.onrender.com/api', // In development, use absolute URL
-  timeout: 10000,
+  baseURL: process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com/api',
+  timeout: 30000, // Increased timeout for Render cold starts
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // Important pour les cookies de session et CORS
+  withCredentials: false, // Set to false for cross-origin requests between Vercel and Render
 });
 
 // Add request interceptor for authentication
@@ -46,11 +43,11 @@ api.interceptors.response.use(
 
     // Vous pouvez ajouter d'autres gestionnaires d'erreurs HTTP ici
     if (error.response?.status === 404) {
-      console.log('Ressource introuvable');
+      // Resource not found - could trigger a notification or redirect
     }
 
     if (error.response?.status === 500) {
-      console.log('Erreur serveur interne');
+      // Internal server error - could trigger a global error handler
     }
 
     return Promise.reject(error);
