@@ -10,7 +10,6 @@ import {
   FaBagShopping,
   FaUser,
   FaVideo,
-  FaEuroSign,
   FaTrash,
   FaFilter,
 } from 'react-icons/fa6';
@@ -124,7 +123,7 @@ const FavoritesPage = () => {
                   <span>{new Date(item.startTime).toLocaleDateString()}</span>
                 </div>
                 <div className="flex items-center">
-                  <FaEuroSign className="mr-2" />
+                  <span className="mr-2 text-sm font-medium">MAD</span>
                   <span>{item.price?.amount || item.price} MAD</span>
                 </div>
                 <div className="flex items-center">
@@ -367,7 +366,7 @@ const FavoritesPage = () => {
                 </div>
                 {item.pricing && (
                   <div className="flex items-center">
-                    <FaEuroSign className="mr-2" />
+                    <span className="mr-2 text-sm font-medium">MAD</span>
                     <span>
                       {item.pricing.amount} {item.pricing.currency}
                     </span>

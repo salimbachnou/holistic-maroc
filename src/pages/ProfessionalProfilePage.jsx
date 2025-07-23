@@ -13,6 +13,7 @@ import {
   GlobeAltIcon,
   PhoneIcon,
   EnvelopeIcon,
+  ArrowPathIcon,
 } from '@heroicons/react/24/outline';
 import { HeartIcon as _HeartIconSolid } from '@heroicons/react/24/solid';
 import React, { useState, useEffect } from 'react';
@@ -37,6 +38,13 @@ const ProfessionalProfilePage = () => {
   const [profilePhoto, setProfilePhoto] = useState(null);
   const [businessHours, setBusinessHours] = useState([]);
   const [coverImages, setCoverImages] = useState([]);
+  const [profileStats, setProfileStats] = useState({
+    totalSessions: 0,
+    totalClients: 0,
+    productsCount: 0,
+    upcomingEvents: 0,
+  });
+  const [statsLoading, setStatsLoading] = useState(false);
 
   const {
     register,
@@ -62,6 +70,13 @@ const ProfessionalProfilePage = () => {
   useEffect(() => {
     if (user?.role === 'professional') {
       loadProfessionalData();
+    }
+  }, [user]);
+
+  // Load profile statistics
+  useEffect(() => {
+    if (user?.role === 'professional') {
+      loadProfileStats();
     }
   }, [user]);
 
@@ -246,6 +261,45 @@ const ProfessionalProfilePage = () => {
     }
   };
 
+  const loadProfileStats = async () => {
+    try {
+      setStatsLoading(true);
+
+      // Tenter de charger les statistiques depuis l'API
+      try {
+        const response = await apiService.getProfileStats();
+
+        if (response.success && response.stats) {
+          setProfileStats(response.stats);
+        } else {
+          console.warn('⚠️ No stats data in API response');
+          // Utiliser les données de fallback
+          setProfileStats({
+            totalSessions: professionalData?.sessions?.length || 0,
+            totalClients: professionalData?.stats?.totalClients || 0,
+            productsCount: professionalData?.products?.length || 0,
+            upcomingEvents: professionalData?.events?.length || 0,
+          });
+        }
+      } catch (apiError) {
+        console.error('❌ Error loading profile stats from API:', apiError);
+
+        // Fallback vers les données locales
+        setProfileStats({
+          totalSessions: professionalData?.sessions?.length || 0,
+          totalClients: professionalData?.stats?.totalClients || 0,
+          productsCount: professionalData?.products?.length || 0,
+          upcomingEvents: professionalData?.events?.length || 0,
+        });
+      }
+    } catch (error) {
+      console.error('❌ Error in loadProfileStats:', error);
+      toast.error('Erreur lors du chargement des statistiques');
+    } finally {
+      setStatsLoading(false);
+    }
+  };
+
   const onSubmit = async data => {
     try {
       setIsLoading(true);
@@ -350,12 +404,6 @@ const ProfessionalProfilePage = () => {
           if (response.success) {
             const newImageUrl = response.imageUrl;
 
-            console.log('Image uploaded successfully:', {
-              imageUrl: newImageUrl,
-              fullImageUrl: response.fullImageUrl,
-              filename: response.filename,
-            });
-
             // Remplacer l'image de couverture (plus efficace)
             return apiService.replaceCoverImage(newImageUrl);
           } else {
@@ -369,11 +417,6 @@ const ProfessionalProfilePage = () => {
 
             // Forcer le rechargement de l'image en ajoutant un timestamp pour éviter le cache
             const refreshedImages = updatedImages.map(img => forceImageReload(img));
-
-            console.log('Cover image updated successfully:', {
-              originalImages: updatedImages,
-              refreshedImages: refreshedImages,
-            });
 
             // Mettre à jour l'état avec les images rafraîchies
             setCoverImages(refreshedImages);
@@ -426,10 +469,6 @@ const ProfessionalProfilePage = () => {
       // Supprimer les paramètres de timestamp (ex: ?t=1752416154374) pour éviter les erreurs 404
       imageUrlToRemove = imageUrlToRemove.split('?')[0];
 
-      console.log('Attempting to remove image:', imageToRemove);
-      console.log('Converted URL for API:', imageUrlToRemove);
-      console.log('Current cover images:', coverImages);
-
       // Remove the cover image from the professional profile
       apiService
         .removeCoverImage(imageUrlToRemove)
@@ -437,7 +476,6 @@ const ProfessionalProfilePage = () => {
           if (response.success) {
             // Update local state with the new images from server
             const updatedImages = response.coverImages || [];
-            console.log('Updated images from server:', updatedImages);
 
             setCoverImages(updatedImages);
             setProfessionalData(prev => ({
@@ -1025,14 +1063,14 @@ const ProfessionalProfilePage = () => {
                         {professionalData.businessType}
                       </p>
                     </div>
-                    <div className="bg-gray-50 p-3 rounded-lg">
+                    {/* <div className="bg-gray-50 p-3 rounded-lg">
                       <h4 className="text-sm font-medium text-gray-900 mb-1">
                         Mode de réservation
                       </h4>
                       <p className="text-sm text-gray-600 capitalize">
                         {professionalData.bookingMode === 'auto' ? 'Automatique' : 'Manuel'}
                       </p>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               )}
@@ -1135,28 +1173,6 @@ const ProfessionalProfilePage = () => {
                       <GlobeAltIcon className="h-4 w-4 mr-1" />
                       Voir sur Google Maps
                     </a>
-
-                    <button
-                      onClick={e => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setShowMapPicker(true);
-                      }}
-                      onTouchStart={e => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                      }}
-                      onTouchEnd={e => {
-                        e.preventDefault();
-                        e.stopPropagation();
-                        setShowMapPicker(true);
-                      }}
-                      className="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium text-sm touch-manipulation active:scale-95 transition-transform duration-200 p-2 -m-2 rounded-md"
-                      style={{ WebkitTapHighlightColor: 'transparent' }}
-                    >
-                      <MapPinIcon className="h-4 w-4 mr-1" />
-                      Modifier la localisation
-                    </button>
                   </div>
                 </div>
               </div>
@@ -1167,33 +1183,47 @@ const ProfessionalProfilePage = () => {
           <div className="space-y-6">
             {/* Stats */}
             <div className="lotus-card">
-              <h3 className="text-base sm:text-lg font-semibold text-gray-900 mb-4">
-                Statistiques
-              </h3>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900">Statistiques</h3>
+                <div className="flex items-center space-x-2">
+                  {statsLoading && (
+                    <div className="flex items-center text-sm text-gray-500">
+                      <LoadingSpinner size="small" className="mr-2" />
+                      Chargement...
+                    </div>
+                  )}
+                  <button
+                    onClick={loadProfileStats}
+                    disabled={statsLoading}
+                    className="p-1 text-gray-400 hover:text-gray-600 transition-colors duration-200 disabled:opacity-50"
+                    title="Actualiser les statistiques"
+                  >
+                    <ArrowPathIcon className={`h-4 w-4 ${statsLoading ? 'animate-spin' : ''}`} />
+                  </button>
+                </div>
+              </div>
               <div className="grid grid-cols-2 gap-3 sm:gap-4">
                 <div className="text-center p-2 sm:p-3 bg-primary-50 rounded-lg">
                   <div className="text-lg sm:text-2xl font-bold text-primary-700">
-                    {professionalData.sessions?.length ||
-                      professionalData.stats?.totalSessions ||
-                      0}
+                    {statsLoading ? '...' : profileStats.totalSessions}
                   </div>
                   <div className="text-xs text-gray-600">Sessions</div>
                 </div>
                 <div className="text-center p-2 sm:p-3 bg-emerald-50 rounded-lg">
                   <div className="text-lg sm:text-2xl font-bold text-emerald-700">
-                    {professionalData.stats?.totalClients || 0}
+                    {statsLoading ? '...' : profileStats.totalClients}
                   </div>
                   <div className="text-xs text-gray-600">Clients</div>
                 </div>
                 <div className="text-center p-2 sm:p-3 bg-blue-50 rounded-lg">
                   <div className="text-lg sm:text-2xl font-bold text-blue-700">
-                    {professionalData.products?.length || 0}
+                    {statsLoading ? '...' : profileStats.productsCount}
                   </div>
                   <div className="text-xs text-gray-600">Produits</div>
                 </div>
                 <div className="text-center p-2 sm:p-3 bg-orange-50 rounded-lg">
                   <div className="text-lg sm:text-2xl font-bold text-orange-700">
-                    {professionalData.events?.length || 0}
+                    {statsLoading ? '...' : profileStats.upcomingEvents}
                   </div>
                   <div className="text-xs text-gray-600">Événements</div>
                 </div>

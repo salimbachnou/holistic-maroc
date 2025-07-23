@@ -380,10 +380,15 @@ const ProfessionalEventBookingsPage = () => {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
             {filteredEvents.map(event => {
               const confirmedParticipants =
-                event.participants?.filter(p => p.status === 'confirmed').length || 0;
+                event.participants
+                  ?.filter(p => p.status === 'confirmed')
+                  .reduce((total, p) => total + (p.quantity || 1), 0) || 0;
               const pendingParticipants =
-                event.participants?.filter(p => p.status === 'pending').length || 0;
-              const totalParticipants = event.participants?.length || 0;
+                event.participants
+                  ?.filter(p => p.status === 'pending')
+                  .reduce((total, p) => total + (p.quantity || 1), 0) || 0;
+              const totalParticipants =
+                event.participants?.reduce((total, p) => total + (p.quantity || 1), 0) || 0;
 
               return (
                 <div
@@ -435,7 +440,7 @@ const ProfessionalEventBookingsPage = () => {
                       <div className="absolute bottom-2 sm:bottom-4 right-2 sm:right-4">
                         <div className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-medium flex items-center">
                           <BellIcon className="w-3 h-3 mr-1" />
-                          {pendingParticipants} en attente
+                          {pendingParticipants} place{pendingParticipants > 1 ? 's' : ''} en attente
                         </div>
                       </div>
                     )}
@@ -490,10 +495,14 @@ const ProfessionalEventBookingsPage = () => {
                       </div>
 
                       <div className="flex justify-between text-xs text-gray-600">
-                        <span>{confirmedParticipants} confirmés</span>
+                        <span>
+                          {confirmedParticipants} place{confirmedParticipants > 1 ? 's' : ''}{' '}
+                          confirmée{confirmedParticipants > 1 ? 's' : ''}
+                        </span>
                         {pendingParticipants > 0 && (
                           <span className="text-yellow-600 font-medium">
-                            {pendingParticipants} en attente
+                            {pendingParticipants} place{pendingParticipants > 1 ? 's' : ''} en
+                            attente
                           </span>
                         )}
                       </div>
@@ -560,6 +569,13 @@ const ProfessionalEventBookingsPage = () => {
                         <p className="text-xl sm:text-2xl font-bold text-blue-900">
                           {participants.filter(p => p.status !== 'cancelled').length}
                         </p>
+                        <p className="text-xs text-blue-600">
+                          (
+                          {participants
+                            .filter(p => p.status !== 'cancelled')
+                            .reduce((total, p) => total + (p.quantity || 1), 0)}{' '}
+                          places)
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -571,6 +587,13 @@ const ProfessionalEventBookingsPage = () => {
                         <p className="text-xs sm:text-sm text-green-600 font-medium">Confirmés</p>
                         <p className="text-xl sm:text-2xl font-bold text-green-900">
                           {participants.filter(p => p.status === 'confirmed').length}
+                        </p>
+                        <p className="text-xs text-green-600">
+                          (
+                          {participants
+                            .filter(p => p.status === 'confirmed')
+                            .reduce((total, p) => total + (p.quantity || 1), 0)}{' '}
+                          places)
                         </p>
                       </div>
                     </div>
@@ -584,6 +607,13 @@ const ProfessionalEventBookingsPage = () => {
                         <p className="text-xl sm:text-2xl font-bold text-yellow-900">
                           {participants.filter(p => p.status === 'pending').length}
                         </p>
+                        <p className="text-xs text-yellow-600">
+                          (
+                          {participants
+                            .filter(p => p.status === 'pending')
+                            .reduce((total, p) => total + (p.quantity || 1), 0)}{' '}
+                          places)
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -594,7 +624,9 @@ const ProfessionalEventBookingsPage = () => {
                       <div>
                         <p className="text-xs sm:text-sm text-purple-600 font-medium">Revenus</p>
                         <p className="text-xl sm:text-2xl font-bold text-purple-900">
-                          {participants.filter(p => p.status === 'confirmed').length *
+                          {participants
+                            .filter(p => p.status === 'confirmed')
+                            .reduce((total, p) => total + (p.quantity || 1), 0) *
                             selectedEvent.price}{' '}
                           MAD
                         </p>
@@ -651,6 +683,17 @@ const ProfessionalEventBookingsPage = () => {
                                 <p className="text-sm text-gray-600 truncate">
                                   {participant.user?.email}
                                 </p>
+                                <div className="flex items-center space-x-2 mt-1">
+                                  <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                                    {participant.quantity || 1} place
+                                    {participant.quantity > 1 ? 's' : ''}
+                                  </span>
+                                  {participant.note && (
+                                    <span className="text-xs text-gray-500">
+                                      Note: {participant.note}
+                                    </span>
+                                  )}
+                                </div>
                                 <p className="text-xs text-gray-500">
                                   Inscrit le{' '}
                                   {format(new Date(participant.createdAt), 'dd/MM/yyyy à HH:mm')}

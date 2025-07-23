@@ -353,6 +353,19 @@ export const apiService = {
       throw error;
     }
   },
+
+  // ===================== PROFILE STATISTICS =====================
+
+  // Récupérer les statistiques du profil professionnel
+  async getProfileStats() {
+    try {
+      const response = await api.get('/professionals/me/profile-stats');
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching profile stats:', error);
+      throw error;
+    }
+  },
 };
 
 export default api;

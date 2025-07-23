@@ -11,7 +11,6 @@ import {
   FaInstagram,
   FaLinkedin,
   FaClock,
-  FaEuroSign,
   FaUserFriends,
   FaCalendarAlt,
   FaUsers,
@@ -470,14 +469,14 @@ const ProfessionalDetailPage = () => {
                     {businessTypeLabels[professional.businessType] || professional.businessType}
                   </p>
                 </div>
-                <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-gray-200 hover:shadow-lg transition-all duration-300">
+                {/* <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-gray-200 hover:shadow-lg transition-all duration-300">
                   <h4 className="text-xs sm:text-sm font-bold text-gray-900 mb-1 sm:mb-2 uppercase tracking-wide">
                     Mode de réservation
                   </h4>
                   <p className="text-sm sm:text-base text-gray-700 font-medium capitalize">
                     {professional.bookingMode === 'auto' ? 'Automatique' : 'Manuel'}
                   </p>
-                </div>
+                </div> */}
                 {professional.paymentEnabled !== undefined && (
                   <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-gray-200 hover:shadow-lg transition-all duration-300">
                     <h4 className="text-xs sm:text-sm font-bold text-gray-900 mb-1 sm:mb-2 uppercase tracking-wide">
@@ -488,7 +487,7 @@ const ProfessionalDetailPage = () => {
                     </p>
                   </div>
                 )}
-                {professional.subscription && (
+                {/* {professional.subscription && (
                   <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-4 sm:p-6 rounded-xl sm:rounded-2xl border border-gray-200 hover:shadow-lg transition-all duration-300">
                     <h4 className="text-xs sm:text-sm font-bold text-gray-900 mb-1 sm:mb-2 uppercase tracking-wide">
                       Plan d'abonnement
@@ -497,7 +496,7 @@ const ProfessionalDetailPage = () => {
                       {professional.subscription.plan || 'Basic'}
                     </p>
                   </div>
-                )}
+                )} */}
               </div>
             </div>
 
@@ -601,7 +600,7 @@ const ProfessionalDetailPage = () => {
             </div>
 
             {/* Statistics */}
-            <div className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-8 transform hover:shadow-2xl transition-all duration-500 border border-white/20">
+            {/* <div className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-8 transform hover:shadow-2xl transition-all duration-500 border border-white/20">
               <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6 sm:mb-8 flex items-center">
                 <div className="h-1 sm:h-1.5 w-8 sm:w-10 bg-gradient-to-r from-pink-500 via-purple-500 to-violet-500 rounded-full mr-3 sm:mr-4 animate-pulse"></div>
                 Statistiques
@@ -644,7 +643,7 @@ const ProfessionalDetailPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Contact Info */}
             <div className="bg-white/80 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-xl p-6 sm:p-8 transform hover:shadow-2xl transition-all duration-500 border border-white/20">

@@ -491,12 +491,16 @@ const EventDetailPage = () => {
     if (userParticipation && userParticipation.status === 'cancelled') {
       // Check if event is still available
       const activeParticipants =
-        event.participants?.filter(p => p.status !== 'cancelled').length || 0;
+        event.participants
+          ?.filter(p => p.status !== 'cancelled')
+          .reduce((total, p) => total + (p.quantity || 1), 0) || 0;
       return activeParticipants >= event.maxParticipants;
     }
 
     const activeParticipants =
-      event.participants?.filter(p => p.status !== 'cancelled').length || 0;
+      event.participants
+        ?.filter(p => p.status !== 'cancelled')
+        .reduce((total, p) => total + (p.quantity || 1), 0) || 0;
     return activeParticipants >= event.maxParticipants;
   };
 
@@ -572,7 +576,9 @@ const EventDetailPage = () => {
                   min="1"
                   max={
                     event.maxParticipants -
-                    (event.participants?.filter(p => p.status !== 'cancelled').length || 0)
+                    (event.participants
+                      ?.filter(p => p.status !== 'cancelled')
+                      .reduce((total, p) => total + (p.quantity || 1), 0) || 0)
                   }
                   value={bookingQuantity}
                   onChange={e => setBookingQuantity(parseInt(e.target.value) || 1)}
@@ -583,7 +589,9 @@ const EventDetailPage = () => {
                     setBookingQuantity(
                       Math.min(
                         event.maxParticipants -
-                          (event.participants?.filter(p => p.status !== 'cancelled').length || 0),
+                          (event.participants
+                            ?.filter(p => p.status !== 'cancelled')
+                            .reduce((total, p) => total + (p.quantity || 1), 0) || 0),
                         bookingQuantity + 1
                       )
                     )
@@ -592,7 +600,9 @@ const EventDetailPage = () => {
                   disabled={
                     bookingQuantity >=
                     event.maxParticipants -
-                      (event.participants?.filter(p => p.status !== 'cancelled').length || 0)
+                      (event.participants
+                        ?.filter(p => p.status !== 'cancelled')
+                        .reduce((total, p) => total + (p.quantity || 1), 0) || 0)
                   }
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1232,7 +1242,9 @@ const EventDetailPage = () => {
                         <span className="text-gray-600">Places restantes</span>
                         <span className="font-semibold text-primary-600">
                           {event.maxParticipants -
-                            (event.participants?.filter(p => p.status !== 'cancelled').length || 0)}
+                            (event.participants
+                              ?.filter(p => p.status !== 'cancelled')
+                              .reduce((total, p) => total + (p.quantity || 1), 0) || 0)}
                         </span>
                       </div>
                     </div>

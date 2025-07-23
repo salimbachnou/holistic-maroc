@@ -6,7 +6,6 @@ import { toast } from 'react-hot-toast';
 import {
   FaClock,
   FaLocationDot,
-  FaEuroSign,
   FaCalendar,
   FaVideo,
   FaUser,
@@ -426,7 +425,7 @@ const ClientSessionsPage = () => {
       {
         title: 'Prix moyen',
         value: `${Math.round(statistics.averagePrice)} MAD`,
-        icon: <FaEuroSign className="text-purple-500" />,
+        icon: <span className="text-purple-500 font-medium">MAD</span>,
         color: 'bg-purple-50 border-purple-200',
         trend: '+5%',
       },

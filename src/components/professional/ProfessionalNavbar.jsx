@@ -63,17 +63,17 @@ const ProfessionalNavbar = () => {
       current: location.pathname.includes('/dashboard/professional/products'),
     },
     {
+      name: 'Événements',
+      href: '/dashboard/professional/events',
+      icon: ClipboardList,
+      current: location.pathname === '/dashboard/professional/events',
+    },
+    {
       name: 'Messages',
       href: '/dashboard/professional/messages',
       icon: MessageCircle,
       current: location.pathname.includes('/dashboard/professional/messages'),
       badge: 0, // This should be updated dynamically with unread message count
-    },
-    {
-      name: 'Événements',
-      href: '/dashboard/professional/events',
-      icon: ClipboardList,
-      current: location.pathname === '/dashboard/professional/events',
     },
     {
       name: 'Réservations Sessions',

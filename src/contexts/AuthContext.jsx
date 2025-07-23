@@ -55,8 +55,6 @@ export const AuthProvider = ({ children }) => {
         setIsAuthenticated(false);
         setAuthError('Session expirée. Veuillez vous reconnecter.');
       } else {
-        // For other errors, keep the token and user state
-        console.warn('Non-auth error during auth check:', error);
         // Try to keep the user logged in if possible
         const token = localStorage.getItem('token');
         if (token) {
@@ -93,7 +91,11 @@ export const AuthProvider = ({ children }) => {
 
       if (response.data && response.data.token) {
         login(response.data.token, response.data.user);
-        toast.success('Inscription réussie !');
+        // Toast unique côté client
+        if (!localStorage.getItem('welcomeToastShown')) {
+          toast.success('Inscription réussie !');
+          localStorage.setItem('welcomeToastShown', 'true');
+        }
         return response.data.user;
       } else {
         throw new Error("Erreur lors de l'inscription. Veuillez réessayer.");
@@ -112,12 +114,12 @@ export const AuthProvider = ({ children }) => {
     name,
     email,
     password,
-    profession,
     specializations,
     phone,
     businessName,
     businessType,
-    address
+    address,
+    coordinates = null
   ) => {
     try {
       setLoading(true);
@@ -135,18 +137,20 @@ export const AuthProvider = ({ children }) => {
           name: `${firstName} ${lastName}`,
           email,
           password,
-          profession,
           specializations,
           phone,
           businessName,
           businessType,
           address,
+          coordinates,
         }
       );
 
       if (response.data && response.data.token) {
         login(response.data.token, response.data.user);
-        toast.success('Inscription professionnelle réussie !');
+        toast.success(
+          "Inscription professionnelle réussie ! Votre compte sera vérifié par l'administrateur dans les plus brefs délais."
+        );
         return response.data.user;
       } else {
         throw new Error("Erreur lors de l'inscription. Veuillez réessayer.");
@@ -171,7 +175,11 @@ export const AuthProvider = ({ children }) => {
 
     if (userData) {
       setUser(userData);
-      toast.success(`Bienvenue, ${userData.fullName}!`);
+      // Toast unique côté client
+      if (!localStorage.getItem('welcomeToastShown')) {
+        toast.success(`Bienvenue, ${userData.fullName}!`);
+        localStorage.setItem('welcomeToastShown', 'true');
+      }
     } else {
       // Fetch user data if not provided
       checkAuthStatus();
@@ -185,6 +193,7 @@ export const AuthProvider = ({ children }) => {
       console.error('Logout error:', error);
     } finally {
       localStorage.removeItem('token');
+      localStorage.removeItem('welcomeToastShown'); // Nettoyer le flag du toast
       delete axios.defaults.headers.common['Authorization'];
       setUser(null);
       setIsAuthenticated(false);
@@ -232,7 +241,19 @@ export const AuthProvider = ({ children }) => {
         if (response.data.success) {
           const userData = response.data.user;
           setUser(userData);
-          toast.success(`Bienvenue, ${userData.fullName}!`);
+
+          // Afficher le toast de bienvenue une seule fois
+          if (!localStorage.getItem('welcomeToastShown')) {
+            if (userData.role === 'professional') {
+              toast.success(
+                `Bienvenue, ${userData.fullName}! Votre compte professionnel sera vérifié par l'administrateur dans les plus brefs délais.`
+              );
+            } else {
+              toast.success(`Bienvenue, ${userData.fullName}!`);
+            }
+            localStorage.setItem('welcomeToastShown', 'true');
+          }
+
           return userData;
         }
       } catch (error) {
@@ -255,6 +276,7 @@ export const AuthProvider = ({ children }) => {
 
       if (response.data && response.data.token) {
         login(response.data.token, response.data.user);
+        // Le toast est déjà géré dans login
         return response.data;
       } else {
         throw new Error('Identifiants invalides');

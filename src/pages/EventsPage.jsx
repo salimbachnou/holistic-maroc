@@ -462,7 +462,7 @@ const EventsPage = () => {
     const capacityText = event.capacity
       ? `${event.capacity.current || 0}/${event.capacity.maximum || 0} places`
       : event.maxParticipants
-        ? `${event.participants?.length || 0}/${event.maxParticipants} places`
+        ? `${event.participants?.filter(p => p.status !== 'cancelled').reduce((total, p) => total + (p.quantity || 1), 0) || 0}/${event.maxParticipants} places`
         : 'Places non spécifiées';
 
     // Gérer les informations du professionnel
