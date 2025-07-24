@@ -981,9 +981,9 @@ const ProfessionalEventsPage = () => {
                     </div>
                   </div>
 
-                  {getValues('coverImages') && getValues('coverImages').length > 0 && (
+                  {watch('coverImages') && watch('coverImages').length > 0 && (
                     <div className="mt-4 grid grid-cols-2 gap-4">
-                      {getValues('coverImages').map((image, index) => (
+                      {watch('coverImages').map((image, index) => (
                         <div key={index} className="relative">
                           <img
                             src={image}

@@ -192,7 +192,10 @@ export const apiService = {
         activities: data.activities || [],
         services: data.services || [],
       };
-
+      // Ajout bookingMode si présent
+      if (data.bookingMode) {
+        updateData.bookingMode = data.bookingMode;
+      }
       const response = await api.put('/professionals/profile', updateData);
 
       // Si la mise à jour est réussie, mais que certains champs manquent dans la réponse,

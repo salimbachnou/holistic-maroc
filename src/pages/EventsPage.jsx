@@ -424,6 +424,12 @@ const EventsPage = () => {
     return `${event.pricing?.amount || event.price || 'Prix non spécifié'} ${event.pricing?.currency || event.currency || 'MAD'}`;
   };
 
+  const formatTime = dateString => {
+    if (!dateString) return 'Heure non spécifiée';
+    const date = new Date(dateString);
+    return date.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+  };
+
   // Event Card Component
   const EventCard = ({ event }) => {
     const isEventFavorite = isFavorite('events', event._id);
@@ -547,7 +553,15 @@ const EventsPage = () => {
               </div>
               <div className="flex items-center text-sm text-gray-500">
                 <Clock className="w-4 h-4 mr-2 text-green-500" />
-                <span>{event.time || 'Heure non spécifiée'}</span>
+                <span>
+                  {event.time
+                    ? event.time
+                    : event.date
+                      ? formatTime(event.date)
+                      : event.schedule?.startDate
+                        ? formatTime(event.schedule.startDate)
+                        : 'Heure non spécifiée'}
+                </span>
               </div>
               <div className="flex items-center text-sm text-gray-500">
                 <MapPin className="w-4 h-4 mr-2 text-red-500" />

@@ -165,6 +165,10 @@ const ProfessionalProfilePage = () => {
           );
         }
 
+        if ('bookingMode' in response.professional) {
+          setValue('bookingMode', response.professional.bookingMode);
+        }
+
         return; // Si l'API réussit, sortir de la fonction
       } catch (apiError) {
         console.error('Erreur API:', apiError);
@@ -333,6 +337,7 @@ const ProfessionalProfilePage = () => {
           website: data.website || '',
           socialMedia: professionalData.contactInfo?.socialMedia || {},
         },
+        bookingMode: data.bookingMode || 'manual',
       };
 
       // Tenter de mettre à jour les données via l'API
@@ -1008,6 +1013,23 @@ const ProfessionalProfilePage = () => {
                     {errors.website && <p className="error-message">{errors.website.message}</p>}
                   </div>
 
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Mode de réservation
+                    </label>
+                    <select
+                      {...register('bookingMode')}
+                      className="input-field"
+                      defaultValue={professionalData.bookingMode || 'manual'}
+                    >
+                      <option value="manual">Manuel (confirmation requise)</option>
+                      <option value="auto">Automatique (confirmation instantanée)</option>
+                    </select>
+                    {errors.bookingMode && (
+                      <p className="error-message">{errors.bookingMode.message}</p>
+                    )}
+                  </div>
+
                   <div className="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3">
                     <button
                       type="submit"
@@ -1063,14 +1085,14 @@ const ProfessionalProfilePage = () => {
                         {professionalData.businessType}
                       </p>
                     </div>
-                    {/* <div className="bg-gray-50 p-3 rounded-lg">
+                    <div className="bg-gray-50 p-3 rounded-lg">
                       <h4 className="text-sm font-medium text-gray-900 mb-1">
                         Mode de réservation
                       </h4>
                       <p className="text-sm text-gray-600 capitalize">
                         {professionalData.bookingMode === 'auto' ? 'Automatique' : 'Manuel'}
                       </p>
-                    </div> */}
+                    </div>
                   </div>
                 </div>
               )}
