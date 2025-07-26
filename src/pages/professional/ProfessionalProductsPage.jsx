@@ -130,8 +130,7 @@ const ProfessionalProductsPage = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const API_URL =
-        process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
 
       const response = await axios.get(`${API_URL}/api/professionals/products`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -165,8 +164,7 @@ const ProfessionalProductsPage = () => {
     try {
       setLoadingOrders(true);
       const token = localStorage.getItem('token');
-      const API_URL =
-        process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
 
       const response = await axios.get(`${API_URL}/api/orders/by-product/${productId}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -187,8 +185,7 @@ const ProfessionalProductsPage = () => {
     try {
       setUpdatingOrderStatus(orderId);
       const token = localStorage.getItem('token');
-      const API_URL =
-        process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
 
       await axios.put(
         `${API_URL}/api/orders/${orderId}/status`,
@@ -224,8 +221,7 @@ const ProfessionalProductsPage = () => {
     try {
       setUpdatingOrderStatus(orderId);
       const token = localStorage.getItem('token');
-      const API_URL =
-        process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
 
       await axios.put(
         `${API_URL}/api/orders/${orderId}/deliver`,
@@ -364,8 +360,7 @@ const ProfessionalProductsPage = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-      const API_URL =
-        process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
 
       const productData = {
         ...formData,

@@ -69,9 +69,7 @@ const ProfessionalEventsPage = () => {
         setLoading(true);
 
         // Fetch professional data
-        const professionalResponse = await fetch(
-          `https://holistic-maroc-backend.onrender.com/api/professionals/${id}`
-        );
+        const professionalResponse = await fetch(`https://holistic-maroc-backend.onrender.com/api/professionals/${id}`);
         const professionalData = await professionalResponse.json();
 
         if (!professionalData.success) {
@@ -163,8 +161,7 @@ const ProfessionalEventsPage = () => {
   const EventCard = ({ event }) => {
     const isEventFavorite = isFavorite('events', event._id);
 
-    const defaultImageUrl =
-      'https://holistic-maroc-backend.onrender.com/uploads/events/1749834623480-860019398.jpg';
+    const defaultImageUrl = 'https://holistic-maroc-backend.onrender.com/uploads/events/1749834623480-860019398.jpg';
     let imageUrl = defaultImageUrl;
 
     // Utiliser les nouvelles données d'image de l'API

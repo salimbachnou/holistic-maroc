@@ -67,8 +67,7 @@ const ProfessionalEventsPage = () => {
         return;
       }
 
-      const BASE_URL =
-        process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com/api';
+      const BASE_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com/api';
 
       const response = await axios.get(`${BASE_URL}/events/professional`, {
         headers: {
@@ -128,8 +127,7 @@ const ProfessionalEventsPage = () => {
       const token = localStorage.getItem('token');
 
       // Get the base API URL
-      const BASE_URL =
-        process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
+      const BASE_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
 
       // Préparer les données de l'événement
       const eventData = {
@@ -185,8 +183,7 @@ const ProfessionalEventsPage = () => {
       setLoading(true);
       const token = localStorage.getItem('token');
 
-      const BASE_URL =
-        process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
+      const BASE_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
 
       await axios.delete(`${BASE_URL}/api/events/${selectedEvent._id}`, {
         headers: { Authorization: `Bearer ${token}` },
@@ -234,8 +231,7 @@ const ProfessionalEventsPage = () => {
         return;
       }
 
-      const API_URL =
-        process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
+      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
 
       const response = await axios.post(`${API_URL}/api/uploads/events`, formData, {
         headers: {
