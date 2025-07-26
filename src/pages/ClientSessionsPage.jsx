@@ -120,7 +120,8 @@ const ClientSessionsPage = () => {
 
   const fetchUserBookedSessions = async () => {
     try {
-      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
+      const API_URL =
+        process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
       const token = localStorage.getItem('token');
 
       const response = await axios.get(`${API_URL}/api/sessions/my-sessions`, {
@@ -138,7 +139,8 @@ const ClientSessionsPage = () => {
 
   const fetchAvailableSessions = async () => {
     try {
-      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
+      const API_URL =
+        process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
       const response = await axios.get(`${API_URL}/api/sessions`, {
         params: {
           status: 'scheduled',
@@ -337,7 +339,8 @@ const ClientSessionsPage = () => {
 
     setBookingInProgress(true);
     try {
-      const API_URL = process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
+      const API_URL =
+        process.env.REACT_APP_API_URL || 'https://holistic-maroc-backend.onrender.com';
       const token = localStorage.getItem('token');
 
       if (!session.professionalId) {

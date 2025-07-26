@@ -70,7 +70,9 @@ const ProductDetailPage = () => {
       setLoading(true);
       setError(null);
 
-      const response = await axios.get(`https://holistic-maroc-backend.onrender.com/api/products/${id}`);
+      const response = await axios.get(
+        `https://holistic-maroc-backend.onrender.com/api/products/${id}`
+      );
 
       // Handle both wrapped and direct response formats
       const productData = response.data.data || response.data;
